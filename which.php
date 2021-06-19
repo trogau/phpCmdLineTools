@@ -1,9 +1,14 @@
 <?php
+/**
+ * which.php
+ * 
+ * A simple PHP implementation of the UNIX 'which' tool. Searches the PATH for requested file. 
+ */
 
 $argc = $_SERVER["argc"];
 $argv = $_SERVER["argv"];
 
-if ($argc == 1)
+if ($argc === 1)
 {
   print "usage: which [-v] [-x] [ filename ]\n\n";
   print "-v\tverbose mode\n";
@@ -14,23 +19,22 @@ if ($argc == 1)
 
 for ($x = 1; $x < sizeof($argv); $x++)
 {
-  if ($argv[$x] == "-v")
+  if ($argv[$x] === "-v")
   {
     print "Verbose mode enabled.\n";
     $verbose = 1;
   }
 
-  if ($argv[$x] == "-x")
+  if ($argv[$x] === "-x")
   {
     print "Exact mode enabled.\n";
     $exact = 1;
   }
 
-  if ( ($argv[$x] != "-v") && ($argv[$x] != "-x") )
+  if ( ($argv[$x] !== "-v") && ($argv[$x] !== "-x") )
   {
     $search = $argv[$x];
   }
-
 }
 
 $search = strtolower($search);
@@ -65,7 +69,7 @@ foreach($pathArray as $key=>$val )
         $search = trim($search);
         $file = trim($file);
 
-        if ($file == $search)
+        if ($file === $search)
           print "Found file in : $val (".number_format(filesize($val."\\".$file))." bytes)\n";
         elseif ( (strstr($file, $search)) && (!isset($exact)) )
           print "Found fragment: $file in $val\n";
